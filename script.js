@@ -8,6 +8,13 @@ var markSpace = [
 ];
 var winner = "";
 
+var scoreX = 0;
+var scoreO = 0;
+const xScore = document.getElementById('x-score');       
+const oScore = document.getElementById('o-score');
+const winnerElement = document.getElementById('winner')
+
+
 function threeEquals(a, b, c) {
     return (a === b && b === c && a != "");
 }
@@ -58,8 +65,34 @@ function setGridBlank(grid) {
             ['', '', ''],
             ['', '', '']
         ];
+        winnerElement.innerHTML = "";
     }, 1000)
 }
+
+
+function incrementScore(winner) {
+    if(winner == "X") {
+        xScore.innerHTML = `X: ${++scoreX}`;
+        winnerElement.style = "color: red;" 
+    } else if (winner == "O") {
+        oScore.innerHTML = `O: ${++scoreO}`;
+        winnerElement.style = "color: blue;" 
+    }
+
+    winnerElement.innerHTML = `Winner: ${winner}`;
+    chance =1;
+    turns = 1;
+}
+
+
+function setElementColor(markedElement, element) {
+    if (markedElement === "X") {
+        element.style = "color: red;"
+    } else {
+        element.style = "color: blue;"
+    }
+}
+
 
 
 function markPoint() {
@@ -77,13 +110,21 @@ function markPoint() {
 
             if (turns == 9) {
                 element.style = "pointer-events: none;"
+                winnerElement.innerHTML = "Tie!";
+                setGridBlank(space);
             }
+
+
 
             if (element.innerHTML === "") {
                 markSpace[row][column] = players[chance];
                 element.innerHTML = players[chance];
+                setElementColor(players[chance], element);
+
                 chance = chance == 0 ? 1 : 0;
                 turns++;
+
+                
 
                 let rowSpace = checkRow(markSpace);
                 let columnSpace = checkColumn(markSpace);
@@ -93,34 +134,28 @@ function markPoint() {
                 let columnCompleted = columnSpace == "" ? 0 : 1;
                 let diagonalCompleted = diagonalSpace == "" ? 0 : 1;
 
-                const winnerElement = document.getElementById('winner');
 
                 if (rowCompleted) {
                     winner = rowSpace;
-                    console.log(winner);
-                    winnerElement.innerHTML = `Winner: ${winner}`;
                     setGridBlank(space);
-
-
+                    incrementScore(winner);
                 } else if (columnCompleted) {
                     winner = columnSpace;
-                    console.log(winner);
-                    winnerElement.innerHTML = `Winner: ${winner}`;
                     setGridBlank(space);
+                    incrementScore(winner);
                 } else if (diagonalCompleted) {
                     winner = diagonalSpace;
-                    console.log(winner);
-                    winnerElement.innerHTML = `Winner: ${winner}`;
+
                     setGridBlank(space);
+                    incrementScore(winner);
                 }
+
 
             }
 
 
         })
     })
-
-    console.log("hello");
 
 
 

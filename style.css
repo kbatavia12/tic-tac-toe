@@ -54,3 +54,25 @@ body {
 .bottom {
     border-bottom: none;
 }
+
+
+#score-container {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20%;
+    padding: 2%;
+    border: 1px solid black;
+    font-size: 1.5em;
+}
+
+
+#score-text {
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+}
+
+#x-score, #o-score {
+    font-family: "Roboto", sans-serif;
+    font-weight: lighter;
+}
